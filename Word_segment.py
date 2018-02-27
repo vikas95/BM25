@@ -9,5 +9,20 @@ class word_segment:
 
     def seg_word(self,line):
         self.words=tokenizer.tokenize(line)
+        self.words=[word1 for word1 in self.words if word1 not in stop_words]
         return self.words
+
+class line_segment:
+     def __init__(self, doc1):
+         self.doc1=doc1
+         self.lines=[]
+
+     def get_lines(self):
+         file1=open(doc1,"r")
+         for line in file1:
+             self.lines.append(line)
+
+         return self.lines
+
+
 
