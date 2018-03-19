@@ -1,3 +1,4 @@
+import glob
 from nltk.tokenize import RegexpTokenizer  ### for nltk word tokenization
 tokenizer = RegexpTokenizer(r'\w+')
 stop_words=['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', 'couldn', 'didn', 'doesn', 'hadn', 'hasn', 'haven', 'isn', 'ma', 'mightn', 'mustn', 'needn', 'shan', 'shouldn', 'wasn', 'weren', 'won', 'wouldn']
@@ -12,17 +13,26 @@ class word_segment:
         self.words=[word1 for word1 in self.words if word1 not in stop_words]
         return self.words
 
-class line_segment:
-     def __init__(self, doc1):
-         self.doc1=doc1
+class line_segment(word_segment):
+     def __init__(self, text):
+         self.text1=text
          self.lines=[]
 
      def get_lines(self):
-         file1=open(doc1,"r")
-         for line in file1:
+         for line in text1:
              self.lines.append(line)
 
          return self.lines
 
 
+class parse_documents(line_segment):
+    def __init__(self, Corpus, directory):
+       self.Corpus=Corpus
+       self.directory1=str(directory)
 
+    def parse_doc(self):
+       for doc1 in glob.glob(self.directory1+"*.txt"):
+           text1=open(doc1,"r")
+           lines1=line_segment.get_lines(text1)
+           print ("the number of lines in Aristo is: ",len(lines1))
+           return lines1
