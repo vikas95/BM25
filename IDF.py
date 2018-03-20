@@ -1,5 +1,4 @@
 
-
 class cal_IDF:
     def __init__(self, dict, num_doc): ## We are taking 4 corpuses - WikiDump, AristoMini, Science_textbook and Flashcards
         self.dict1=dict
