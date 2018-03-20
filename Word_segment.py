@@ -8,31 +8,32 @@ class word_segment:
         self.words=[]
         self.line=line
 
-    def seg_word(self,line):
-        self.words=tokenizer.tokenize(line)
+    def seg_word(self):
+        self.words=tokenizer.tokenize(self.line)
         self.words=[word1 for word1 in self.words if word1 not in stop_words]
         return self.words
 
-class line_segment(word_segment):
-     def __init__(self, text):
-         self.text1=text
-         self.lines=[]
-
-     def get_lines(self):
-         for line in text1:
-             self.lines.append(line)
-
-         return self.lines
-
-
-class parse_documents(line_segment):
+class parse_documents(word_segment):
     def __init__(self, Corpus, directory):
        self.Corpus=Corpus
        self.directory1=str(directory)
+       self.term_freq={}
+       self.posting_list={}
+       self.num_doc=0
 
     def parse_doc(self):
+
        for doc1 in glob.glob(self.directory1+"*.txt"):
-           text1=open(doc1,"r")
-           lines1=line_segment.get_lines(text1)
-           print ("the number of lines in Aristo is: ",len(lines1))
-           return lines1
+           text1=open(doc1,"r", encoding="UTF-8").readlines()
+           # lines1=line_segment.get_lines(text1)
+           for line_num, line in enumerate(text1):
+               dummy_word=word_segment(line).seg_word()
+               self.num_doc+=1
+               for word1 in dummy_word:
+                   if word1 in self.term_freq.keys():
+                      self.term_freq[str(word1)]+=1
+                      self.posting_list[str(word1)].append(line_num)
+                   else:
+                      self.term_freq.update({str(word1):1})
+                      self.posting_list.update({str(word1):[]})
+       return self.posting_list, self.term_freq, self.num_doc
