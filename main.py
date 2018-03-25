@@ -11,6 +11,6 @@ print(TF)
 
 """
 
-cols_sizes=Preprocess_Arc("ARC","ARC_corpus/ARC-Challenge/ARC-Challenge-Dev.csv").preprocess()
+cols_sizes, questions, candidates, algebra=Preprocess_Arc("ARC","ARC_corpus/ARC-Challenge/ARC-Challenge-Train.csv").preprocess()
 
-print (cols_sizes)
+print (len(algebra))
